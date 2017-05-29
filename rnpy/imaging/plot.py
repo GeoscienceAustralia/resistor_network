@@ -225,7 +225,7 @@ def plot_fluidcurrent(wd, searchlist, cellsize, cutf = 1e-19, cutc = 1e-9,  cmap
     
     ii = 0
     amplitudes = []
-    labels = 'abcdef'
+    labels = 'abcdefghi'
     nrows = len(searchlist)
     if plot_aperture:
         ncols = 3
@@ -509,13 +509,14 @@ def plot3dflow(flow_array,cellsize,thresh=1e-40,model_direction=2,direction='xyz
     # set nan and small apertures to 0.
     arr[np.isnan(arr)] = 0.
     arr[np.abs(arr)<thresh] = 0.
-    arr[arr>vmax] = vmax
-    arr[arr<vmin] = vmin
+#    arr[arr>vmax] = vmax
+#    arr[arr<vmin] = vmin
+#    print arr
 #    print vmax,vmin
-#    if vmax is None:
-#        vmax = np.nanmax(arr)
-#    if vmin is None:
-#        vmin = np.nanmin(arr)
+    if vmax is None:
+        vmax = np.nanmax(arr)
+    if vmin is None:
+        vmin = np.nanmin(arr)
     # get number of cells and cellsize
     nz,ny,nx = np.array(arr.shape[:3]) - 2.
     if type(cellsize) in [float,int]:
@@ -529,6 +530,7 @@ def plot3dflow(flow_array,cellsize,thresh=1e-40,model_direction=2,direction='xyz
                                                                np.linspace(0,dz*(nz+1),nz+2))]
     
     mlab.figure(bgcolor=bgcolor)
+
     
     if 'x' in direction:
         ## x currents
